@@ -1,0 +1,64 @@
+name: iruchinapp
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '5432'
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  liquibase:
+    image: liquibase/liquibase:4.31
+    container_name: liquibase
+    profiles: ["full"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./src/main/resources:/liquibase/resources:ro
+    command:
+      - --search-path=/liquibase/resources
+      - --changelog-file=db/changelog/db.changelog-master.yaml
+      - --url=jdbc:postgresql://postgres:5432/${DB_NAME}
+      - --username=${DB_USER}
+      - --password=${DB_PASSWORD}
+      - update
+    networks:
+      - backend
+
+  app:
+    build: .
+    container_name: test
+    profiles: ["full"]
+    restart: unless-stopped
+    depends_on:
+      liquibase:
+        condition: service_completed_successfully
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_LIQUIBASE_ENABLED: "false"
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+networks:
+  backend:
+
+volumes:
+  pgdata:

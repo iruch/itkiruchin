@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-balances
+      author: iruchin
+      changes:
+        - createTable:
+            tableName: balances
+            columns:
+              - column:
+                  name: wallet_uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_balance
+                    nullable: false
+                    foreignKeyName: fk_balance_wallet
+                    references: wallets(uuid)
+                    deleteCascade: true
+              - column:
+                  name: amount
+                  type: NUMERIC(19, 2)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: ALTER TABLE balances ADD CONSTRAINT chk_balance_amount_non_negative CHECK (amount >= 0);
+      rollback:
+        - dropTable:
+            tableName: balance
+
+
