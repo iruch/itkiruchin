@@ -1,0 +1,136 @@
+{
+  "info": {
+    "_postman_id": "4b984fe8-f887-4c89-945d-7465a259e702",
+    "name": "ITKAcademy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "11248330"
+  },
+  "item": [
+    {
+      "name": "Get all wallets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create wallet",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/wallets",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "wallets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get wallet balance",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/wallets/{{walletId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "wallets",
+            "{{walletId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Operate - deposit",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n     \"walletId\": \"{{walletId}}\",\r\n     \"operationType\": \"DEPOSIT\",\r\n     \"amount\": 1000\r\n   }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/wallet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "wallet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Operate - withdraw",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n     \"walletId\": \"{{walletId}}\",\r\n     \"operationType\": \"WITHDRAW\",\r\n     \"amount\": 233\r\n   }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/wallet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "wallet"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "walletId",
+      "value": ""
+    }
+  ]
+}

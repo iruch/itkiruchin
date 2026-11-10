@@ -16,7 +16,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unused") // Подавил чтобы не вылезало
+@SuppressWarnings("unused") // Подавил чтобы не вылезало при пушах
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

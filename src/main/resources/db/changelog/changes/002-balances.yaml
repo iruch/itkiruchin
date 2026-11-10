@@ -32,6 +32,6 @@ databaseChangeLog:
             sql: ALTER TABLE balances ADD CONSTRAINT chk_balance_amount_non_negative CHECK (amount >= 0);
       rollback:
         - dropTable:
-            tableName: balance
+            tableName: balances
 
 

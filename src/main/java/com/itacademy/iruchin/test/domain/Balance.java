@@ -17,6 +17,7 @@ public class Balance {
     @Column(name = "wallet_uuid")
     private UUID walletUuid;
 
+    @MapsId
     @OneToOne
     @JoinColumn(name = "wallet_uuid")
     private Wallet wallet;
